@@ -1,9 +1,13 @@
-import React, { KeyboardEvent } from 'react';
-import { Tournament, Player } from '../tournament';
+import React from 'react';
+import { Tournament, Player, Match } from '../tournament';
+import styled from 'styled-components';
 
-interface Keyboard extends KeyboardEvent {
-  code: string;
-}
+const MatchCard = styled.div`
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #f3f3f3;
+  margin-bottom: 10px;
+`;
 
 function RoundRobinTournament() {
   const [playerName, setPlayerName] = React.useState<string>('');
@@ -12,10 +16,7 @@ function RoundRobinTournament() {
     false
   );
   const [tournament, setTournament] = React.useState<Tournament | null>(null);
-
-  React.useEffect(() => {
-    console.log(tournament);
-  }, []);
+  const [schedule, setSchedule] = React.useState<Match[][] | null>(null);
 
   const renderPlayers = function () {
     const players: Player[] = [];
@@ -30,9 +31,35 @@ function RoundRobinTournament() {
     });
   };
 
+  const renderSchedule = function () {
+    if (tournament && schedule) {
+      return schedule.map((round, roundNumber) => {
+        roundNumber = roundNumber + 1;
+
+        return (
+          <div key={`round-${roundNumber}`}>
+            <h1 style={{ fontWeight: 'bold' }}>Round {roundNumber}</h1>
+            {round.map((match) => {
+              const { local, visitor } = match.getTeams();
+              return (
+                <MatchCard key={local[0].name + ' ' + local[1].name}>
+                  Local: {local[0].name} & {local[1].name}
+                  <br />
+                  Visitor: {visitor[0].name} & {visitor[1].name}
+                  <br />
+                </MatchCard>
+              );
+            })}
+          </div>
+        );
+      });
+    }
+  };
+
   return (
     <div>
-      <h1>Round Robin</h1>
+      <h1>Round Robin {tournament?.name}</h1>
+
       {!existsTournament && (
         <form
           onSubmit={(e) => {
@@ -47,6 +74,7 @@ function RoundRobinTournament() {
             value={tournamentName}
             onChange={(e) => setTournamentName(e.target.value)}
             type='text'
+            autoFocus
           />
         </form>
       )}
@@ -63,11 +91,26 @@ function RoundRobinTournament() {
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
             type='text'
+            autoFocus
           />
         </form>
       )}
 
       {existsTournament && renderPlayers()}
+
+      <br />
+      <button
+        onClick={() => {
+          tournament?.createRoundRobinLeague();
+          if (tournament?.schedule) {
+            setSchedule(tournament?.schedule);
+          }
+        }}
+      >
+        Generate Tournament!
+      </button>
+
+      {renderSchedule()}
     </div>
   );
 }

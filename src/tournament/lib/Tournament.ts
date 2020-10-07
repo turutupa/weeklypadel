@@ -1,5 +1,6 @@
 import Player from './Player';
 import Match, { Teams } from './Match';
+import Leaderboard from './Leaderboard';
 
 type Players = Map<string, Player>;
 
@@ -9,11 +10,12 @@ class Tournament {
   }
 
   private players: Players;
-  private name: string;
+  public schedule: Match[][];
 
-  constructor(name: string) {
+  constructor(public name: string) {
     this.name = name;
     this.players = new Map();
+    this.schedule = [];
   }
 
   /**
@@ -49,14 +51,14 @@ class Tournament {
    * Create Round Robin League with this.players.
    * Must exist a minimum of 8 players
    */
-  createRoundRobinLeague() {
-    const pairsOfPlayers: [Player, Player][] = [];
-
+  createRoundRobinLeague(): void {
     const listOfPlayers: string[] = [];
 
     for (let [player, _] of this.players) {
       listOfPlayers.push(player);
     }
+
+    const pairsOfPlayers: Set<[Player, Player]> = new Set();
 
     for (let i = 0; i < listOfPlayers.length - 1; i++) {
       for (let j = i + 1; j < listOfPlayers.length; j++) {
@@ -64,63 +66,24 @@ class Tournament {
         const secondPlayer = this.players.get(listOfPlayers[j]);
 
         if (firstPlayer && secondPlayer) {
-          pairsOfPlayers.push([firstPlayer, secondPlayer]);
+          pairsOfPlayers.add([firstPlayer, secondPlayer]);
         }
-      }
-    }
-
-    // console.log(pairsOfPlayers);
-
-    interface PlayersGraph {
-      [playersName: string]: Set<string>;
-    }
-
-    // Create a graph and a function to update graph
-    // to trace wether players have already played together
-    // so they are not again matched to play together
-    const playersGraph: PlayersGraph = {};
-    const matches: Set<Match> = new Set();
-
-    function hasAlreadyPlayedTogether(player: Player, newPartner: Player) {
-      const graphPlayer = playersGraph[player.name];
-      if (graphPlayer) {
-        if (graphPlayer.has(newPartner.name)) return true;
-        else {
-          playersGraph[player.name].add(newPartner.name);
-          return false;
-        }
-      } else if (!graphPlayer) {
-        playersGraph[player.name] = new Set([newPartner.name]);
-        return false;
       }
     }
 
     // Create matches of 4 players
-    for (let i = 0; i < pairsOfPlayers.length - 1; i++) {
-      const firstLocal = pairsOfPlayers[i][0];
-      const secondLocal = pairsOfPlayers[i][1];
-      let haveMatchAssigned: boolean = false;
+    // Verifies local player is not in visitor team
+    const matches: Set<Match> = new Set();
 
-      // if (
-      //   hasAlreadyPlayedTogether(firstLocal, secondLocal) ||
-      //   hasAlreadyPlayedTogether(secondLocal, firstLocal)
-      // ) {
-      //   continue;
-      // }
+    for (let locals of pairsOfPlayers) {
+      let localsMatched: boolean = false;
+      for (let visitors of pairsOfPlayers) {
+        if (localsMatched) continue;
+        const firstLocal = locals[0];
+        const secondLocal = locals[1];
+        const firstVisitor = visitors[0];
+        const secondVisitor = visitors[1];
 
-      for (let j = i + 1; j < pairsOfPlayers.length; j++) {
-        if (haveMatchAssigned) continue;
-        const firstVisitor = pairsOfPlayers[j][0];
-        const secondVisitor = pairsOfPlayers[j][1];
-
-        // if (
-        //   hasAlreadyPlayedTogether(firstVisitor, secondVisitor) ||
-        //   hasAlreadyPlayedTogether(secondVisitor, firstVisitor)
-        // ) {
-        //   continue;
-        // }
-
-        // check that local players are not in visitors
         if (
           firstLocal !== firstVisitor &&
           firstLocal !== secondVisitor &&
@@ -133,18 +96,13 @@ class Tournament {
               visitor: [firstVisitor, secondVisitor],
             })
           );
-          haveMatchAssigned = true;
+          pairsOfPlayers.delete(locals);
+          pairsOfPlayers.delete(visitors);
+          localsMatched = true;
         }
       }
     }
 
-    // console.log(playersGraph);
-    // for (let match of matches) {
-    //   console.log(JSON.stringify(match, null, 2));
-    // }
-
-    // Creates number of rounds taking into account
-    // the number of players
     const rounds: number = this.players.size - 1;
     const schedule: Match[][] = [
       ...Array(rounds)
@@ -152,11 +110,10 @@ class Tournament {
         .map((_) => []),
     ];
 
-    // Adds the calculates matches to each round,
-    // by verifying the players only play once per round
-    // AND
-    // deletes the match from the matches array
-    // to be sure the match is not duplicated
+    // Adds the calculated matches to each round,
+    // by 1. verifying the players only play once per round
+    // AND 2. deletes the match from the matches array
+    // to ensure the match is not duplicated
     for (let round of schedule) {
       let roundPlayers: Set<string> = new Set();
       for (let possibleMatch of matches) {
@@ -166,8 +123,6 @@ class Tournament {
           for (let player of matchPlayers) {
             roundPlayers.add(player.name);
           }
-
-          // console.log('Round players: ', roundPlayers);
         }
         const possiblePlayers = possibleMatch.getTeams();
         const [firstLocal, secondLocal] = [...possiblePlayers.local];
@@ -184,10 +139,7 @@ class Tournament {
       }
     }
 
-    // console.log('Schedule', schedule);
-    // console.log('Schedule:', JSON.stringify(schedule, null, 2));
-    // console.log(matches);
-    return schedule;
+    this.schedule = [...schedule];
   }
 }
 
