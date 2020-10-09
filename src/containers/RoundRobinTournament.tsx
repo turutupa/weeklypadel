@@ -43,9 +43,13 @@ function RoundRobinTournament() {
               const { local, visitor } = match.getTeams();
               return (
                 <MatchCard key={local[0].name + ' ' + local[1].name}>
-                  Local: {local[0].name} & {local[1].name}
+                  <span style={{ color: 'slateblue' }}>
+                    {local[0].name} & {local[1].name}
+                  </span>
                   <br />
-                  Visitor: {visitor[0].name} & {visitor[1].name}
+                  <span style={{ color: 'mediumseagreen' }}>
+                    {visitor[0].name} & {visitor[1].name}
+                  </span>
                   <br />
                 </MatchCard>
               );

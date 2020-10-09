@@ -58,6 +58,8 @@ class Tournament {
       listOfPlayers.push(player);
     }
 
+    if (listOfPlayers.length % 2 !== 0) listOfPlayers.push('BYE');
+
     const pairsOfPlayers: Set<[Player, Player]> = new Set();
 
     for (let i = 0; i < listOfPlayers.length - 1; i++) {
@@ -103,6 +105,8 @@ class Tournament {
       }
     }
 
+    // console.log('Missing pairs', pairsOfPlayers);
+
     const rounds: number = this.players.size - 1;
     const schedule: Match[][] = [
       ...Array(rounds)
@@ -139,6 +143,7 @@ class Tournament {
       }
     }
 
+    console.log('Missing matches:', matches);
     this.schedule = [...schedule];
   }
 }
