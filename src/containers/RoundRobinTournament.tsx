@@ -18,6 +18,23 @@ function RoundRobinTournament() {
   const [tournament, setTournament] = React.useState<Tournament | null>(null);
   const [schedule, setSchedule] = React.useState<Match[][] | null>(null);
 
+  React.useEffect(() => {
+    setTournament(Tournament.named('Padel'));
+    tournament?.addPlayer('Alber');
+    tournament?.addPlayer('Alba');
+    tournament?.addPlayer('Churre');
+    tournament?.addPlayer('Sergel');
+    tournament?.addPlayer('Guillermo');
+    // tournament?.addPlayer('Keenan');
+    // tournament?.addPlayer('Cipri');
+    // tournament?.addPlayer('MA');
+    tournament?.createRoundRobinLeague();
+    if (tournament?.schedule) {
+      setSchedule(tournament.schedule);
+    }
+    setExistsTournament(true);
+  }, [existsTournament]);
+
   const renderPlayers = function () {
     const players: Player[] = [];
     if (tournament) {
