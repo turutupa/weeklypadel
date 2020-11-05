@@ -20,15 +20,32 @@ function RoundRobinTournament() {
 
   React.useEffect(() => {
     setTournament(Tournament.named('Padel'));
-    tournament?.addPlayer('Alber');
-    tournament?.addPlayer('Alba');
-    tournament?.addPlayer('Churre');
-    tournament?.addPlayer('Sergel');
-    tournament?.addPlayer('Guillermo');
-    // tournament?.addPlayer('Keenan');
-    // tournament?.addPlayer('Cipri');
-    // tournament?.addPlayer('MA');
-    tournament?.createRoundRobinLeague();
+    tournament?.addPlayer('1');
+    tournament?.addPlayer('2');
+    tournament?.addPlayer('3');
+    tournament?.addPlayer('4');
+    tournament?.addPlayer('5');
+    tournament?.addPlayer('6');
+    tournament?.addPlayer('7');
+    tournament?.addPlayer('8');
+    // tournament?.addPlayer('9');
+    // tournament?.addPlayer('10');
+    // tournament?.addPlayer('11');
+    // tournament?.addPlayer('12');
+    // tournament?.addPlayer('13');
+    // tournament?.addPlayer('14');
+    // tournament?.addPlayer('15');
+    // tournament?.addPlayer('16');
+    // tournament?.addPlayer('17');
+    // tournament?.addPlayer('18');
+    // tournament?.addPlayer('19');
+    // tournament?.addPlayer('20');
+    // tournament?.addPlayer('21');
+    // tournament?.addPlayer('22');
+    // tournament?.addPlayer('23');
+    // tournament?.addPlayer('24');
+
+    tournament?.createRoundRobinWithUniquePairs();
     if (tournament?.schedule) {
       setSchedule(tournament.schedule);
     }
@@ -122,7 +139,7 @@ function RoundRobinTournament() {
       <br />
       <button
         onClick={() => {
-          tournament?.createRoundRobinLeague();
+          tournament?.createRoundRobinWithUniquePairs();
           if (tournament?.schedule) {
             setSchedule(tournament?.schedule);
           }

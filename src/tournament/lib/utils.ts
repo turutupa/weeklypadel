@@ -9,7 +9,12 @@ export function generatePairsOfPlayers(players: Players) {
     listOfPlayers.push(player);
   }
 
-  if (listOfPlayers.length % 2 !== 0) listOfPlayers.push('BYE');
+  // if (listOfPlayers.length % 2 !== 0) {
+  //   listOfPlayers.push('BYE');
+  //   players.set('BYE', Player.named('BYE'));
+  // }
+
+  // console.log('LIST OF PLAYERS', listOfPlayers);
 
   const pairsOfPlayers: Set<[Player, Player]> = new Set();
 
@@ -18,11 +23,12 @@ export function generatePairsOfPlayers(players: Players) {
       const firstPlayer = players.get(listOfPlayers[i]);
       const secondPlayer = players.get(listOfPlayers[j]);
 
-      if (firstPlayer && secondPlayer) {
+      if (firstPlayer && secondPlayer && firstPlayer !== secondPlayer) {
         pairsOfPlayers.add([firstPlayer, secondPlayer]);
       }
     }
   }
+
   return pairsOfPlayers;
 }
 
@@ -31,73 +37,114 @@ export function generatePairsOfPlayers(players: Players) {
 export function generateMatches(
   pairsOfPlayers: Set<[Player, Player]>
 ): Set<Match> {
-  const matches: Set<Match> = new Set();
+  let result: Set<Match> = new Set();
+  let missingPairs: [Player, Player][] = [];
+  let foundOptimalSolution: boolean = false;
 
-  for (let locals of pairsOfPlayers) {
-    let localsMatched: boolean = false;
-    for (let visitors of pairsOfPlayers) {
-      if (localsMatched) continue;
-      const firstLocal = locals[0];
-      const secondLocal = locals[1];
-      const firstVisitor = visitors[0];
-      const secondVisitor = visitors[1];
+  function backtrack(pairs: Set<[Player, Player]>, matches: Set<Match>) {
+    if (foundOptimalSolution) return;
+    if (matches.size >= result.size) {
+      result = new Set([...matches]);
+      missingPairs = [...pairs];
+      if (pairs.size === 0) {
+        foundOptimalSolution = true;
+      }
+    }
 
-      if (
-        firstLocal !== firstVisitor &&
-        firstLocal !== secondVisitor &&
-        secondLocal !== firstVisitor &&
-        secondLocal !== secondVisitor
-      ) {
-        matches.add(
-          new Match({
-            local: [firstLocal, secondLocal],
-            visitor: [firstVisitor, secondVisitor],
-          })
-        );
-        pairsOfPlayers.delete(locals);
-        pairsOfPlayers.delete(visitors);
-        localsMatched = true;
+    for (let local of pairs) {
+      for (let visitor of pairs) {
+        if (local === visitor) continue;
+
+        const [firstLocal, secondLocal] = local;
+        const [firstVisitor, secondVisitor] = visitor;
+
+        if (
+          firstLocal !== firstVisitor &&
+          firstLocal !== secondVisitor &&
+          secondLocal !== firstVisitor &&
+          secondLocal !== secondVisitor
+        ) {
+          const copyOfMatches = new Set([...matches]);
+          const copyOfPairs = new Set([...pairs]);
+
+          const newMatch = new Match({
+            local,
+            visitor,
+          });
+          copyOfMatches.add(newMatch);
+          copyOfPairs.delete(local);
+          copyOfPairs.delete(visitor);
+
+          // memo.set(allPlayersNames, matches);
+
+          backtrack(copyOfPairs, copyOfMatches);
+        }
       }
     }
   }
-  console.log('Missing pairs', pairsOfPlayers);
-  return matches;
+
+  backtrack(pairsOfPlayers, new Set());
+  console.log('Missing pairs', missingPairs);
+  return result;
 }
 
 export function generateSchedule(matches: Set<Match>): Match[][] {
-  const schedule: Match[][] = [];
+  type Schedule = Match[][];
+  let result: Schedule = [...new Array(99).fill(1)];
 
-  // Adds the calculated matches to each round,
-  // by 1. verifying the players only play once per round
-  // AND 2. deletes the match from the matches array
-  // to ensure the match is not duplicated
-  while (matches.size) {
-    let round = [];
-    let roundPlayers: Set<string> = new Set();
-    for (let possibleMatch of matches) {
-      for (let match of round) {
-        const matchPlayers = match.getPlayers();
-
-        for (let player of matchPlayers) {
-          roundPlayers.add(player.name);
-        }
+  function backtrack(
+    listOfMatches: Set<Match>,
+    schedule: Schedule = [],
+    round: Match[] = [],
+    roundPlayers: Set<string> = new Set()
+  ) {
+    if (schedule.length > result.length) return;
+    if (!listOfMatches.size) {
+      if (result.length > schedule.length) {
+        result = [...schedule, round];
       }
+    }
+
+    for (let possibleMatch of listOfMatches) {
       const possiblePlayers = possibleMatch.getTeams();
       const [firstLocal, secondLocal] = [...possiblePlayers.local];
       const [firstVisitor, secondVisitor] = [...possiblePlayers.visitor];
+
+      const copyOfRound = [...round];
+      const copyOfSchedule = [...schedule];
+      const copyOflistOfMatches = new Set([...listOfMatches]);
+      const copyOfRoundPlayers = new Set([...roundPlayers]);
+
       if (
-        !roundPlayers.has(firstLocal.name) &&
-        !roundPlayers.has(secondLocal.name) &&
-        !roundPlayers.has(firstVisitor.name) &&
-        !roundPlayers.has(secondVisitor.name)
+        !copyOfRoundPlayers.has(firstLocal.name) &&
+        !copyOfRoundPlayers.has(secondLocal.name) &&
+        !copyOfRoundPlayers.has(firstVisitor.name) &&
+        !copyOfRoundPlayers.has(secondVisitor.name)
       ) {
-        round.push(possibleMatch);
-        matches.delete(possibleMatch);
+        // to prevent duplicated players
+        copyOfRoundPlayers.add(firstLocal.name);
+        copyOfRoundPlayers.add(secondLocal.name);
+        copyOfRoundPlayers.add(firstVisitor.name);
+        copyOfRoundPlayers.add(secondVisitor.name);
+
+        copyOflistOfMatches.delete(possibleMatch);
+        copyOfRound.push(possibleMatch);
+
+        backtrack(
+          copyOflistOfMatches,
+          copyOfSchedule,
+          copyOfRound,
+          copyOfRoundPlayers
+        );
+      } else {
+        backtrack(copyOflistOfMatches, [...copyOfSchedule, round]);
       }
     }
-    schedule.push(round);
   }
 
-  console.log('Missing matches:', matches);
-  return [...schedule];
+  backtrack(matches);
+
+  console.log('RESULT', result);
+
+  return [...result];
 }

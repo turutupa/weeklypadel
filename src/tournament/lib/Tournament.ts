@@ -1,5 +1,5 @@
 import Player from './Player';
-import Match, { Teams } from './Match';
+import Match from './Match';
 import Leaderboard from './Leaderboard';
 import {
   generatePairsOfPlayers,
@@ -54,14 +54,19 @@ class Tournament {
 
   /**
    * Create Round Robin League with this.players.
-   * Must exist a minimum of 8 players
+   * Must exist a minimum of 4 players
    */
-  createRoundRobinLeague(): void {
+  createRoundRobinWithUniquePairs(): void {
+    if (this.players.size % 4 !== 0) return;
     const pairsOfPlayers = generatePairsOfPlayers(this.players);
     const matches = generateMatches(pairsOfPlayers);
     const schedule = generateSchedule(matches);
     this.schedule = [...schedule];
   }
+
+  createRoundRobinWithPairs(): void {}
+
+  createBracketsTournament(): void {}
 }
 
 export default Tournament;
