@@ -98,12 +98,6 @@ class Tournament {
     });
 
     return schedule;
-
-    // const pairsOfPlayers = generatePairsOfPlayers(this.players);
-    // const matches = generateMatches(pairsOfPlayers);
-    // const schedule = generateSchedule(matches);
-    // this.schedule = [...schedule];
-    // return schedule
   }
 }
 

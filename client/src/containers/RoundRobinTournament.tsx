@@ -147,15 +147,19 @@ function RoundRobinTournament() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            tournament?.addPlayer(playerName);
-            setPlayerName('');
-            setNumberOfPlayers(numberOfPlayers + 1);
+            if (playerName.trim().length > 0) {
+              tournament?.addPlayer(playerName);
+              setPlayerName('');
+              setNumberOfPlayers(tournament?.getPlayersNames().length);
+            }
           }}
         >
           <Label>Player name</Label>
           <Input
             value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
+            onChange={(e) => {
+              setPlayerName(e.target.value.trim());
+            }}
             type='text'
             autoFocus
           />
