@@ -4,9 +4,36 @@ import styled from 'styled-components';
 
 const MatchCard = styled.div`
   padding: 15px;
-  border-radius: 6px;
-  background-color: #f3f3f3;
   margin-bottom: 10px;
+  width: 100%;
+  margin: 0 10px;
+  background-color: rgb(110, 156, 225, 0.3);
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 20px;
+`;
+
+const Input = styled.input`
+  padding: 10px 50px;
+`;
+
+const Round = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 50px;
+`;
+
+const Li = styled.li`
+  text-decoration: none !important;
+  color: rgb(60, 107, 177);
+`;
+
+const Ul = styled.ul`
+  columns: 2;
+  list-style: none;
 `;
 
 function RoundRobinTournament() {
@@ -27,7 +54,7 @@ function RoundRobinTournament() {
     }
 
     return players.map((player) => {
-      return <li key={player.name}>{player.name}</li>;
+      return <Li key={player.name}>{player.name}</Li>;
     });
   };
 
@@ -39,17 +66,18 @@ function RoundRobinTournament() {
         return (
           <div key={`round-${roundNumber}`}>
             <h1 style={{ fontWeight: 'bold' }}>Round {roundNumber}</h1>
-            {round.map((match) => {
-              const { local, visitor } = match.getTeams();
-              return (
-                <MatchCard key={local[0].name + ' ' + local[1].name}>
-                  Local: {local[0].name} & {local[1].name}
-                  <br />
-                  Visitor: {visitor[0].name} & {visitor[1].name}
-                  <br />
-                </MatchCard>
-              );
-            })}
+            <Round>
+              {round.map((match) => {
+                const { local, visitor } = match.getTeams();
+                return (
+                  <MatchCard key={local[0].name + ' ' + local[1].name}>
+                    {local[0].name} & {local[1].name}
+                    <p style={{ fontWeight: 'bold' }}>VS</p>
+                    {visitor[0].name} & {visitor[1].name}
+                  </MatchCard>
+                );
+              })}
+            </Round>
           </div>
         );
       });
@@ -58,7 +86,7 @@ function RoundRobinTournament() {
 
   return (
     <div>
-      <h1>Round Robin {tournament?.name}</h1>
+      <h1> {tournament?.name || 'Tournament Generator'}</h1>
 
       {!existsTournament && (
         <form
@@ -69,8 +97,8 @@ function RoundRobinTournament() {
             setExistsTournament(true);
           }}
         >
-          <label>Tournament name</label>
-          <input
+          <Label>Tournament name</Label>
+          <Input
             value={tournamentName}
             onChange={(e) => setTournamentName(e.target.value)}
             type='text'
@@ -86,8 +114,8 @@ function RoundRobinTournament() {
             setPlayerName('');
           }}
         >
-          <label>Player name</label>
-          <input
+          <Label>Player name</Label>
+          <Input
             value={playerName}
             onChange={(e) => setPlayerName(e.target.value)}
             type='text'
@@ -96,7 +124,7 @@ function RoundRobinTournament() {
         </form>
       )}
 
-      {existsTournament && renderPlayers()}
+      {existsTournament && <Ul>{renderPlayers()}</Ul>}
 
       <br />
       <button
