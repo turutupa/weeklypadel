@@ -19,13 +19,12 @@ class Tournament {
     this.schedule = [];
   }
 
-  /**
-   * Public Method to Get all participating players
-   */
+  // Get All Players
   getPlayers(): Players {
     return this.players;
   }
 
+  // Get all players names in an array
   getPlayersNames(): string[] {
     let playersNames: string[] = [];
     for (let [key, _] of this.players) {
@@ -37,7 +36,7 @@ class Tournament {
 
   /**
    * Public method to add players in batch
-   * @param players
+   * @param players: string[]
    */
   addPlayers(players: string[]): void {
     players.forEach((player) => this.addPlayer(player));
@@ -59,7 +58,12 @@ class Tournament {
 
   /**
    * Create Round Robin League with this.players.
-   * Must exist a minimum of 8 players
+   * RoundRobin library creates all combinations of pair per round
+   *
+   * Iterate over each round and convert those pairs of string
+   * to pairs of type Player
+   *
+   * Create Matches with those pairs of Players
    */
   createRoundRobinLeague(): Match[][] {
     const rounds = robin(this.getPlayersNames().length, this.getPlayersNames());
@@ -68,7 +72,7 @@ class Tournament {
       let roundWithMatches: Match[] = [];
       let r = [...round];
 
-      function getPlayers(
+      function getPlayersFromNames(
         players: Players,
         team: [string, string]
       ): [Player, Player] {
@@ -86,8 +90,8 @@ class Tournament {
 
         if (local && visitor) {
           teams = {
-            local: getPlayers(this.players, local),
-            visitor: getPlayers(this.players, visitor),
+            local: getPlayersFromNames(this.players, local),
+            visitor: getPlayersFromNames(this.players, visitor),
           };
           const match = new Match(teams);
           roundWithMatches.push(match);

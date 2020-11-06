@@ -177,8 +177,6 @@ function RoundRobinTournament() {
       {existsTournament &&
         tournament?.getPlayersNames() &&
         tournament?.getPlayersNames().length > 0 && (
-          // tournament?.getPlayersNames().length % 4 === 0 &&
-          // tournament?.getPlayersNames().length < 12 &&
           <>
             <button
               onClick={() => {
