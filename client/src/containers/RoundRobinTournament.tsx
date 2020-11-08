@@ -184,6 +184,7 @@ function RoundRobinTournament() {
                   const schedule = tournament?.createRoundRobinLeague();
                   setSchedule(schedule);
                 } catch (e) {
+                  console.log(e);
                   console.log('Oops! There has been an error!');
                 }
               }}
