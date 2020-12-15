@@ -1,59 +1,29 @@
-import robin from 'roundrobin';
-import Player from './Player';
 import Match, { Teams } from './Match';
-// import Leaderboard from './Leaderboard';
+import { Players } from './Tournament';
+import Player from './Player';
+import robin from 'roundrobin';
 
-export type Players = Map<string, Player>;
-
-class Tournament {
-  static named(name: string) {
-    return new Tournament(name);
-  }
-
-  private players: Players;
-  public schedule: Match[][];
-
-  constructor(public name: string) {
-    this.name = name;
-    this.players = new Map();
-    this.schedule = [];
-  }
-
-  // Get All Players
-  getPlayers(): Players {
-    return this.players;
-  }
-
-  // Get all players names in an array
-  getPlayersNames(): string[] {
-    let playersNames: string[] = [];
-    for (let [key, _] of this.players) {
-      playersNames.push(key);
-    }
-
-    return playersNames;
+export default class RoundRobin {
+  private name: string;
+  constructor() {
+    this.name = 'heyooo';
   }
 
   /**
-   * Public method to add players in batch
-   * @param players: string[]
+   * Creates a round robin tournament in which you play
+   * with a fixed partner and you play at least once
+   * against each other pair
+   * @param players: Players
    */
-  addPlayers(players: string[]): void {
-    players.forEach((player) => this.addPlayer(player));
-  }
-
-  /**
-   * Public method to add one player to the tournament
-   * @param {Player} player
-   * @return {void}
-   */
-  addPlayer(player: string): void {
-    if (this.players.has(player)) {
-      new Error(`Player named ${player} already exists`);
-    }
-
-    this.players.set(player, Player.named(player));
-    return;
+  roundRobinFixedPairs(pairs: [string, string][]): void {
+    // const pairsOfPlayers = pairs.map((pair) =>
+    //   pair.map((player) => Player.named(player))
+    // );
+    const rounds = robin(
+      pairs.length,
+      pairs.map((pair) => `${pair[0]} ${pair[1]}`)
+    );
+    console.log('fixed pairs rr', rounds);
   }
 
   /**
@@ -64,9 +34,11 @@ class Tournament {
    * to pairs of type Player
    *
    * Create Matches with those pairs of Players
+   * @param players: Players
    */
-  createRoundRobinLeague(): Match[][] {
-    const rounds = robin(this.getPlayersNames().length, this.getPlayersNames());
+  roundRobinAlternatingPairs(players: Players): Match[][] {
+    console.log(this.name);
+    const rounds = robin(players.size, [...players.keys()]);
 
     let missingPairsToPlay: [string, string][] = [];
 
@@ -80,8 +52,8 @@ class Tournament {
 
         if (local && visitor) {
           const teams: Teams = {
-            local: this._getPlayersFromNames(this.players, local),
-            visitor: this._getPlayersFromNames(this.players, visitor),
+            local: this._getPlayersFromNames(players, local),
+            visitor: this._getPlayersFromNames(players, visitor),
           };
           const match = new Match(teams);
           roundWithMatches.push(match);
@@ -121,8 +93,8 @@ class Tournament {
             secondLocal !== secondVisitor
           ) {
             const match = new Match({
-              local: this._getPlayersFromNames(this.players, local),
-              visitor: this._getPlayersFromNames(this.players, visitor),
+              local: this._getPlayersFromNames(players, local),
+              visitor: this._getPlayersFromNames(players, visitor),
             });
             usedPairs.add(i);
             usedPairs.add(j);
@@ -171,5 +143,3 @@ class Tournament {
     else throw new Error('Not enough players!');
   }
 }
-
-export default Tournament;

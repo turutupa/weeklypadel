@@ -13,8 +13,8 @@ var app = express_1.default();
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.get('/:id', function (req, res) {
-    console.log(req.params.id);
-    res.send('<h1>Hi there!</h1>');
+    var name = req.params.id;
+    res.send("<h1>Hi there " + name + "!</h1>");
 });
 app.listen(PORT, function () {
     console.log('App started on port ', PORT);

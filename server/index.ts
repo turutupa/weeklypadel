@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/:id', (req: Request, res: Response) => {
-  console.log(req.params.id);
-  res.send('<h1>Hi there!</h1>');
+  const name = req.params.id;
+  res.send(`<h1>Hi there ${name}!</h1>`);
 });
 
 app.listen(PORT, () => {

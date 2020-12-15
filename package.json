@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently npm:start:*",
     "start:build": "tsc -w",
-    "start:run": "nodemon build/index.js"
+    "start:run": "nodemon build/index.js",
+    "dev":"nodemon --exec 'deno run --allow-read --allow-net' server/index.ts "
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,13 @@
   "dependencies": {
     "@types/body-parser": "^1.19.0",
     "@types/cookie-session": "^2.0.41",
+    "@types/react-router-dom": "^5.1.6",
     "body-parser": "^1.19.0",
     "concurrently": "^5.3.0",
     "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
