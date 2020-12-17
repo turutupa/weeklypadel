@@ -7,8 +7,9 @@ import { siteAcronym } from 'utils/constants';
 import { primary, dark } from 'utils/colors';
 
 const NavContainer = styled.div`
-  position: fixed;
-  height: 80px;
+  position: absolute;
+  overflow: hidden;
+  height: 60px;
   width: 100%;
   background-color: ${dark};
   z-index: 9999;
@@ -22,10 +23,10 @@ const Nav = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   width: 100%;
-  padding: 30px 5vw;
+  padding: 20px 5vw;
 
   @media (min-width: 768px) {
-    padding: 30px 20vw;
+    padding: 20px 20vw;
   }
 `;
 

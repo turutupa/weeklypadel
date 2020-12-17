@@ -12,4 +12,5 @@ export const light: string = '#fff';
 // neon colors
 export const blueNeon: string = `text-shadow: 0 0 0.5vw #1041ff, 0 0 1vw #1041ff, 0 0 1vw #1041ff, 0 0 0.5vw #1041ff, 0 0 0.4vw #8bfdfe, 0.5vw 0.5vw 0.1vw #147280;`;
 
-export const yellowNeon: string = `text-shadow: 0 0 0.5vw ${dawn}, 0 0 1vw ${dawn}, 0 0 1vw ${dawn}, 0 0 0.5vw ${dawn}, 0 0 0.4vw ${sunset}, 0.5vw 0.5vw 0.1vw #147280;`;
+export const yellowNeon: string = `text-shadow: 0 0 0.5vw ${dawn}, 0 0 1vw ${dawn}, 0 0 1vw ${dawn}, 0 0 0.5vw ${dawn}, 0 0 0.4vw ${sunset}, 0.5vw 0.5vw 0.1vw #806914;`;
+// export const yellowNeon: string = `text-shadow: 0 0 0.5vw ${dawn}, 0 0 1vw ${dawn}, 0 0 1vw ${dawn}, 0 0 0.5vw ${dawn}, 0 0 0.4vw ${sunset}, 0.5vw 0.5vw 0.1vw #147280;`;

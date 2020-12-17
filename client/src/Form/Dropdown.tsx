@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { electricBlue } from 'utils/colors';
+import { primary, electricBlue } from 'utils/colors';
+import { border, boxShadow, borderRadius, fontSize, padding } from './helpers';
 
 const Wrapper = styled.div`
   display: flex;
@@ -9,16 +10,25 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.label`
+  ${fontSize}
   margin-bottom: 10px;
   font-family: Commando;
 `;
 
 const Select = styled.select`
-  font-family: Commando;
-  font-size: 1rem;
-  padding: 20px;
-  box-shadow: 8px 8px ${electricBlue};
-  border: none;
+  ${border(electricBlue)}
+  ${boxShadow(electricBlue)}
+  ${borderRadius}
+  ${fontSize}
+  ${padding}
+
+  outline: none;
+  font-family: Neon;
+
+  &:focus {
+    ${border(primary)}
+    ${boxShadow(primary)}
+  }
 `;
 
 interface Option {
@@ -55,6 +65,7 @@ export default function Dropdown(props: Props) {
         name='tournamentType'
         id='tournamentType'
         onChange={(e) => {
+          e.stopPropagation();
           if (callback) callback(e.target.value);
         }}
       >

@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { primary, electricBlue } from 'utils/colors';
+import { border, boxShadow, borderRadius, fontSize, padding } from './helpers';
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
@@ -11,33 +13,45 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.label`
+  ${fontSize}
   margin-bottom: 10px;
   font-family: Commando;
 `;
 
 const Input = styled.input`
-  box-shadow: 8px 8px 0 ${electricBlue};
+  ${border(electricBlue)}
+  ${boxShadow(electricBlue)}
+  ${borderRadius}
+  ${fontSize}
+  ${padding}
 
   outline: none;
-  padding: 20px;
-  font-family: Commando;
-  font-size: 1rem;
+  font-family: Neon;
   text-align: left;
-  border: none;
 
   &:focus {
-    box-shadow: 8px 8px 0 ${primary};
+    ${boxShadow(primary)}
+    ${border(primary)}
   }
+`;
+
+const Error = styled.div`
+  position: absolute;
+  bottom: -30px;
+  left: 15px;
+  font-size: 0.8rem;
+  color: ${primary};
 `;
 
 interface Props {
   label: string;
   value: string;
   callback?: (...args: any) => void;
+  error?: string;
 }
 
 export default function FormInput(props: Props) {
-  const { label, value, callback } = props;
+  const { label, value, callback, error } = props;
 
   return (
     <Wrapper>
@@ -45,12 +59,13 @@ export default function FormInput(props: Props) {
       <Input
         value={value}
         onChange={(e) => {
-          console.log(e.target.value);
+          e.stopPropagation();
           if (callback) {
             callback(e.target.value);
           }
         }}
       />
+      {error && <Error>{error}</Error>}
     </Wrapper>
   );
 }

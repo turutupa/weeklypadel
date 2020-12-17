@@ -21,6 +21,9 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   min-height: 100vh;
   width: 100%;
   color: white;
@@ -40,6 +43,7 @@ const Header = styled.div`
 
 const Body = styled.div`
   width: 100%;
+  max-width: 600px;
 `;
 
 interface Props {

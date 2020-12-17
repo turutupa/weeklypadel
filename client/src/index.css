@@ -26,13 +26,6 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Coubra';
-  src: url('./Fonts/CoubraFont.otf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 html,
 body {
   height: 100%;

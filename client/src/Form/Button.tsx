@@ -2,33 +2,62 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { primary, electricBlue } from 'utils/colors';
+import { border, boxShadow, borderRadius, padding } from './helpers';
+
+interface ButtonProps {
+  bg?: string;
+  color?: string;
+  solid?: boolean;
+}
 
 const Wrapper = styled.button`
-  width: 100%;
-  padding: 20px;
-  outline: none;
+  ${borderRadius}
+  ${padding}
+
+  ${({ bg, color, solid }: ButtonProps): string => {
+    return `
+      ${solid ? 'box-shadow: none !important;' : boxShadow(electricBlue)}
+      ${solid ? 'border: none;' : border(electricBlue)}
+      background-color: ${bg};
+      color: ${color};
+    `;
+  }};
+
   font-size: 1rem;
+  width: 100%;
+  outline: none;
   font-family: Commando;
-  box-shadow: 8px 8px 0 ${electricBlue};
   cursor: pointer;
-  border: none;
   margin-top: 10px;
   margin-bottom: 30px;
 
   &:hover {
-    box-shadow: 8px 8px 0 ${primary};
+    filter: brightness(1.2);
+    ${boxShadow(primary)}
   }
 `;
 
 interface Props {
   children?: React.ReactNode;
+  fontColor?: string;
+  bg?: string;
+  color?: string;
+  solid?: boolean;
   onClick?: (...args: any) => void;
 }
 
 export default function Button(props: Props) {
-  const { children, onClick } = props;
+  let { children, onClick, solid, color, bg } = props;
+
+  // default Background && Font Color
+  if (!color) color = 'black';
+  if (!bg) bg = 'white';
+
   return (
     <Wrapper
+      solid={solid}
+      color={color}
+      bg={bg}
       onClick={() => {
         if (onClick) {
           onClick();

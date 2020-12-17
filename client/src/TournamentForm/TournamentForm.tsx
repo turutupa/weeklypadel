@@ -2,13 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Layout from 'Layout';
-import RoundRobin from './RoundRobin';
-import Brackets from './Brackets';
-import { tournamentOptions, titles, neonColors } from './helpers';
+import { titles, neonColors } from './helpers';
 
-import { useRecoilState } from 'recoil';
-import { tournamentType } from './atom';
-import { Dropdown } from 'Form';
+import { useRecoilValue } from 'recoil';
+import { tournamentType } from './formAtom';
+import {
+  SelectTournament,
+  AddTournamentName,
+  AddPlayers,
+  Players,
+  GenerateTournament,
+} from './components';
 
 const Body = styled.div`
   display: flex;
@@ -17,19 +21,7 @@ const Body = styled.div`
 `;
 
 function TournamentForm() {
-  const [selectedTournamentType, setTournamentType] = useRecoilState(
-    tournamentType
-  );
-  let activeForm = RoundRobin;
-
-  switch (selectedTournamentType) {
-    case 'roundrobin':
-      activeForm = RoundRobin;
-      break;
-    case 'brackets':
-      activeForm = Brackets;
-      break;
-  }
+  const selectedTournamentType = useRecoilValue(tournamentType);
 
   return (
     <Layout
@@ -37,13 +29,11 @@ function TournamentForm() {
       neon={neonColors[selectedTournamentType]}
     >
       <Body>
-        <Dropdown
-          label='Tournament type'
-          options={tournamentOptions}
-          callback={setTournamentType}
-        />
-        <Dropdown label='Tournament Mode' options={[]} />
-        {activeForm()}
+        <SelectTournament />
+        <AddTournamentName />
+        <AddPlayers />
+        <GenerateTournament />
+        <Players />
       </Body>
     </Layout>
   );

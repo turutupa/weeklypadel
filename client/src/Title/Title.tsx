@@ -25,7 +25,7 @@ const neonColors = {
   blue: blueNeon,
 };
 
-const AlternativeHeader = styled.h2`
+const SecondaryHeader = styled.h2`
   ${({ neon }: { neon?: 'yellow' | 'blue' }) =>
     neon ? neonColors[neon] : '5px 5px grey'}
   font-family: RealNeon;
@@ -34,7 +34,7 @@ const AlternativeHeader = styled.h2`
   font-size: 2rem;
 
   @media (min-width: 768px) {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 `;
 
@@ -48,9 +48,7 @@ export default function Title({
   neon?: 'yellow' | 'blue';
 }) {
   if (secondary) {
-    return (
-      <AlternativeHeader neon={neon}>{title || siteName}</AlternativeHeader>
-    );
+    return <SecondaryHeader neon={neon}>{title || siteName}</SecondaryHeader>;
   }
   return <Header>{title || siteName}</Header>;
 }
