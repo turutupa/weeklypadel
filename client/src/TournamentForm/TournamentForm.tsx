@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Layout from 'Layout';
+import Layout from './Layout';
 import { titles, neonColors } from './helpers';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { tournamentType } from './formAtom';
 import {
   SelectTournament,
@@ -21,7 +21,15 @@ const Body = styled.div`
 `;
 
 function TournamentForm() {
-  const selectedTournamentType = useRecoilValue(tournamentType);
+  const [selectedTournamentType, setTournamentType] = useRecoilState(
+    tournamentType
+  );
+
+  React.useEffect(() => {
+    return () => {
+      setTournamentType('roundrobin');
+    };
+  }, []);
 
   return (
     <Layout

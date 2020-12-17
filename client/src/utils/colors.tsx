@@ -10,7 +10,8 @@ export const dark: string = 'rgb(15,0,25)';
 export const light: string = '#fff';
 
 // neon colors
-export const blueNeon: string = `text-shadow: 0 0 0.5vw #1041ff, 0 0 1vw #1041ff, 0 0 1vw #1041ff, 0 0 0.5vw #1041ff, 0 0 0.4vw #8bfdfe, 0.5vw 0.5vw 0.1vw #147280;`;
+export const yellowNeon: string = `text-shadow: 0 0 10px ${dawn}, 0 0 10px ${dawn}, 0 0 20px ${dawn}, 0 0 20px ${dawn}, 0 0 20px ${sunset}, 10px 10px 1px #806914;`;
+export const blueNeon: string = `text-shadow: 0 0 10px #1041ff, 0 0 10px #1041ff, 0 0 20px #1041ff, 0 0 20px #1041ff, 0 0 20px #8bfdfe, 10px 10px 1px #147280;`;
 
-export const yellowNeon: string = `text-shadow: 0 0 0.5vw ${dawn}, 0 0 1vw ${dawn}, 0 0 1vw ${dawn}, 0 0 0.5vw ${dawn}, 0 0 0.4vw ${sunset}, 0.5vw 0.5vw 0.1vw #806914;`;
+// export const blueNeon: string = `text-shadow: 0 0 0.5vw #1041ff, 0 0 1vw #1041ff, 0 0 1vw #1041ff, 0 0 0.5vw #1041ff, 0 0 0.4vw #8bfdfe, 0.5vw 0.5vw 0.1vw #147280;`;
 // export const yellowNeon: string = `text-shadow: 0 0 0.5vw ${dawn}, 0 0 1vw ${dawn}, 0 0 1vw ${dawn}, 0 0 0.5vw ${dawn}, 0 0 0.4vw ${sunset}, 0.5vw 0.5vw 0.1vw #147280;`;

@@ -1,4 +1,5 @@
 export const homeRoute: string = '/';
 export const roundRobinRoute: string = '/roundrobin';
 export const bracketsRoute: string = '/brackets';
-export const tournamentRoute: string = '/create';
+export const generateTournamentRoute: string = '/create';
+export const tournamentRoute: string = '/tournament/:tournament/';

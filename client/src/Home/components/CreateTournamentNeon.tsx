@@ -2,7 +2,7 @@ import React from 'react';
 // @ts-ignore
 import styled from 'styled-components';
 import Neon from 'Neon';
-import { tournamentRoute } from 'utils/routes';
+import { generateTournamentRoute } from 'utils/routes';
 
 const NeonWrapper = styled.div`
   z-index: 1;
@@ -27,7 +27,7 @@ const NeonWrapper = styled.div`
 export default function TournamentSelection() {
   return (
     <NeonWrapper>
-      <Neon top='Generate' bottom='Tournament' to={tournamentRoute} />
+      <Neon top='Generate' bottom='Tournament' to={generateTournamentRoute} />
     </NeonWrapper>
   );
 }

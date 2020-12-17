@@ -9,8 +9,7 @@ export default function AddPlayers() {
   const [playerName, setPlayerName] = React.useState<string>('');
   const [error, setError] = React.useState<string>('');
 
-  const playerNameWithoutSpaces = (val: string) =>
-    setPlayerName(val.split(' ').join(''));
+  const playerNameWithoutSpaces = (val: string) => setPlayerName(val.trim());
 
   function addNewPlayer() {
     const player = playerName.trim();

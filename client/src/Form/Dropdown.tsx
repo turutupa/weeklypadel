@@ -22,6 +22,7 @@ const Select = styled.select`
   ${fontSize}
   ${padding}
 
+  cursor: pointer;
   outline: none;
   font-family: Neon;
 

@@ -5,23 +5,34 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+
+// initiate recoil
 import { RecoilRoot } from 'recoil';
 
+// containers
 import Home from 'Home';
 import TournamentForm from 'TournamentForm';
-import { homeRoute, tournamentRoute } from 'utils/routes';
+import Tournament from 'Tournament';
+
+// routes
+import {
+  homeRoute,
+  generateTournamentRoute,
+  tournamentRoute,
+} from 'utils/routes';
 
 function App() {
   return (
     <Router>
       <RecoilRoot>
         <Switch>
-          <Route path={homeRoute} exact>
-            <Home />
-          </Route>
-          <Route path={tournamentRoute} exact>
-            <TournamentForm />
-          </Route>
+          <Route path={homeRoute} exact component={Home} />
+          <Route
+            path={generateTournamentRoute}
+            exact
+            component={TournamentForm}
+          />
+          <Route path={tournamentRoute} component={Tournament} />
           <Route path='*'>
             <Redirect to='/' />
           </Route>
