@@ -37,7 +37,7 @@ const Input = styled.input`
 
 const Error = styled.div`
   position: absolute;
-  bottom: -30px;
+  bottom: -27px;
   left: 15px;
   font-size: 0.8rem;
   color: ${primary};
@@ -48,16 +48,18 @@ interface Props {
   value: string;
   callback?: (...args: any) => void;
   error?: string;
+  required?: boolean;
 }
 
 export default function FormInput(props: Props) {
-  const { label, value, callback, error } = props;
+  const { label, value, callback, required, error } = props;
 
   return (
     <Wrapper>
       <Label>{label}</Label>
       <Input
         value={value}
+        required={required}
         onChange={(e) => {
           e.stopPropagation();
           if (callback) {
@@ -65,7 +67,7 @@ export default function FormInput(props: Props) {
           }
         }}
       />
-      {error && <Error>{error}</Error>}
+      {error && <Error>* {error}</Error>}
     </Wrapper>
   );
 }

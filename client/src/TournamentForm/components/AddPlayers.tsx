@@ -1,15 +1,34 @@
 import React from 'react';
 
 import { TextInput, Button } from 'Form';
-import { useRecoilState } from 'recoil';
-import { players as playersAtom } from '../formAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  players as playersAtom,
+  tournamentMode as tournamentModeAtom,
+} from '../formAtom';
+import { tournamentMinNumberPlayers, fixedTeamsGame } from '../helpers';
 
 export default function AddPlayers() {
   const [players, setPlayers] = useRecoilState(playersAtom);
+  const tournamentMode = useRecoilValue(tournamentModeAtom);
   const [playerName, setPlayerName] = React.useState<string>('');
   const [error, setError] = React.useState<string>('');
 
+  const minNumberOfPlayersErrorMsg = 'At least 4 players are required';
+
   const playerNameWithoutSpaces = (val: string) => setPlayerName(val.trim());
+
+  React.useEffect(() => {
+    handleNumberOfPlayersError();
+  }, [players]);
+
+  function handleNumberOfPlayersError(): void {
+    if (players.length >= tournamentMinNumberPlayers) {
+      setError('');
+    } else {
+      setError(minNumberOfPlayersErrorMsg);
+    }
+  }
 
   function addNewPlayer() {
     const player = playerName.trim();
@@ -20,8 +39,8 @@ export default function AddPlayers() {
     if (copyPlayers.has(player)) {
       setError(`Player ${player} already exists`);
     } else {
-      setPlayers([...players, player]);
-      setError('');
+      const newPlayersList: string[] = [...players, player];
+      setPlayers(newPlayersList);
     }
   }
 
@@ -34,12 +53,23 @@ export default function AddPlayers() {
         setPlayerName('');
       }}
     >
-      <TextInput
-        label={`Player name #${players.length + 1}`}
-        value={playerName}
-        callback={playerNameWithoutSpaces}
-        error={error}
-      />
+      {fixedTeamsGame(tournamentMode) && (
+        <>
+          <TextInput
+            label={`Player #${players.length + 1}`}
+            value={playerName}
+            callback={playerNameWithoutSpaces}
+            error={error}
+          />
+          <TextInput
+            label={`Player  #${players.length + 1}`}
+            value={playerName}
+            callback={playerNameWithoutSpaces}
+            error={error}
+          />
+        </>
+      )}
+
       <Button>Add Player</Button>
     </form>
   );

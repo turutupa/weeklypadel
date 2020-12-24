@@ -6,6 +6,7 @@ import { blueNeon, yellowNeon } from 'utils/colors';
 import { siteName } from 'utils/constants';
 
 const Header = styled(H1)`
+  z-index: 99;
   user-select: none;
   margin-top: 20px !important;
   margin-left: -30px !important;

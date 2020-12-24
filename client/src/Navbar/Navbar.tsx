@@ -7,7 +7,7 @@ import { siteAcronym } from 'utils/constants';
 import { primary, dark } from 'utils/colors';
 
 const NavContainer = styled.div`
-  position: absolute;
+  position: fixed;
   overflow: hidden;
   height: 60px;
   width: 100%;
@@ -16,6 +16,7 @@ const NavContainer = styled.div`
   font-family: Commando;
   top: 0;
   color: white;
+  filter: opacity(0.9);
 `;
 
 const Nav = styled.div`
@@ -32,6 +33,7 @@ const Nav = styled.div`
 
 const NavItem = styled.div`
   margin-right: 3%;
+  user-select: none;
 `;
 
 const Strong = styled.strong`
@@ -40,6 +42,7 @@ const Strong = styled.strong`
   font-size: 1.2rem;
   font-family: Commando;
   cursor: pointer;
+  user-select: none;
 
   &:hover {
     filter: brightness(1.4);

@@ -79,8 +79,7 @@ const P = styled.p`
 `;
 
 const NeonSpanRR = styled.span`
-  text-shadow: 0 0 0.5vw #1041ff, 0 0 1vw #1041ff, 0 0 1vw #1041ff,
-    0 0 0.5vw #1041ff, 0 0 0.4vw #8bfdfe, 0.5vw 0.5vw 0.1vw #147280;
+  ${blueNeon}
   margin-right: 10px;
   margin-bottom: 5px;
   font-family: RealNeon;

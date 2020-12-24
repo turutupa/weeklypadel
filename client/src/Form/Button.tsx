@@ -44,10 +44,11 @@ interface Props {
   color?: string;
   solid?: boolean;
   onClick?: (...args: any) => void;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
 export default function Button(props: Props) {
-  let { children, onClick, solid, color, bg } = props;
+  let { children, onClick, type, solid, color, bg } = props;
 
   // default Background && Font Color
   if (!color) color = 'black';
@@ -58,6 +59,7 @@ export default function Button(props: Props) {
       solid={solid}
       color={color}
       bg={bg}
+      type={type}
       onClick={() => {
         if (onClick) {
           onClick();

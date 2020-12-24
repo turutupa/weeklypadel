@@ -11,7 +11,7 @@ const throughSpace = keyframes`
 `;
 
 const Grid = styled.div`
-z-index: 0;
+z-index: 3;
 position: absolute;
 top: -400px;
 bottom: -400px;

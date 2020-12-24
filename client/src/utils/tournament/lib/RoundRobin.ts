@@ -4,18 +4,13 @@ import Player from './Player';
 import robin from 'roundrobin';
 
 export default class RoundRobin {
-  private name: string;
-  constructor() {
-    this.name = 'heyooo';
-  }
-
   /**
    * Creates a round robin tournament in which you play
    * with a fixed partner and you play at least once
    * against each other pair
    * @param players: Players
    */
-  roundRobinFixedPairs(pairs: [string, string][]): void {
+  fixedTeams(pairs: [string, string][]): void {
     // const pairsOfPlayers = pairs.map((pair) =>
     //   pair.map((player) => Player.named(player))
     // );
@@ -27,7 +22,6 @@ export default class RoundRobin {
   }
 
   /**
-   * Create Round Robin League with this.players.
    * RoundRobin library creates all combinations of pair per round
    *
    * Iterate over each round and convert those pairs of string
@@ -36,8 +30,7 @@ export default class RoundRobin {
    * Create Matches with those pairs of Players
    * @param players: Players
    */
-  roundRobinAlternatingPairs(players: Players): Match[][] {
-    console.log(this.name);
+  rotatingTeams(players: Players): Match[][] {
     const rounds = robin(players.size, [...players.keys()]);
 
     let missingPairsToPlay: [string, string][] = [];

@@ -6,7 +6,7 @@ import RoundRobin from './RoundRobin';
 export type Players = Map<string, Player>;
 
 class Tournament {
-  static named(name: string) {
+  static roundRobin(name: string): Tournament {
     return new Tournament(name, new Map(), new RoundRobin());
   }
 
@@ -55,12 +55,12 @@ class Tournament {
 
   roundRobinRandomAssignedPair() {}
 
-  roundRobinFixedPairs(pairs: [string, string][]) {
-    return this.roundRobin.roundRobinFixedPairs(pairs);
+  fixedTeams(pairs: [string, string][]) {
+    return this.roundRobin.fixedTeams(pairs);
   }
 
-  roundRobinAlternatingPairs(): Match[][] {
-    return this.roundRobin.roundRobinAlternatingPairs(this.players);
+  rotatingTeams(): Match[][] {
+    return this.roundRobin.rotatingTeams(this.players);
   }
 }
 

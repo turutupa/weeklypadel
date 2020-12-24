@@ -1,8 +1,11 @@
 import React from 'react';
 import { MatchProps } from './interfaces';
 
-export default function Tournament(props: MatchProps) {
-  const tournamentType = props.match.params.tournament;
+import Layout from './Layout';
 
-  return <div style={{ color: 'white' }}>Tournament {tournamentType}</div>;
+export default function Tournament(props: MatchProps) {
+  const type = props.match.params.tournament;
+  const mode = props.match.params.mode;
+
+  return <Layout>This is body</Layout>;
 }

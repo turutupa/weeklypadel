@@ -8,6 +8,7 @@ const Container = styled.div`
   box-sizing: border-box;
   max-width: 100vw;
   padding: 10px;
+  margin-top: -25px;
 `;
 
 const Title = styled.p`
@@ -15,10 +16,11 @@ const Title = styled.p`
   color: white;
   word-wrap: break-word;
   font-family: Commando;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 20px;
-  max-width: 400px;
+  margin-bottom: 10px;
+  max-width: 85vw;
+  text-shadow: 2px 2px black;
 `;
 
 const Subtitle = styled.p`
@@ -30,6 +32,12 @@ const Subtitle = styled.p`
   max-width: 400px;
   text-align: center;
   margin-top: 0;
+  max-width: 80vw;
+  text-shadow: 2px 2px black;
+
+  @media (min-width: 768px) {
+    max-width: 400px;
+  }
 `;
 
 export default function SiteDescription() {

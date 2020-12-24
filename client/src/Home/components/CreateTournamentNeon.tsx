@@ -5,7 +5,7 @@ import Neon from 'Neon';
 import { generateTournamentRoute } from 'utils/routes';
 
 const NeonWrapper = styled.div`
-  z-index: 1;
+  z-index: 4;
   display: flex;
   width: 100%;
   max-width: 1000px;
