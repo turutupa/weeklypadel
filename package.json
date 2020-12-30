@@ -8,7 +8,8 @@
     "start": "concurrently npm:start:*",
     "start:build": "tsc -w",
     "start:run": "nodemon build/index.js",
-    "dev":"nodemon --exec 'deno run --allow-read --allow-net' server/index.ts "
+    "dev":"nodemon --exec 'deno run --allow-read --allow-net' server/index.ts",
+    "bFE": "npm run build --prefix ./client"
   },
   "repository": {
     "type": "git",
