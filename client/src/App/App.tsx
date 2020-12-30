@@ -13,9 +13,11 @@ import { RecoilRoot } from 'recoil';
 import Home from 'Home';
 import TournamentForm from 'TournamentForm';
 import Tournament from 'Tournament';
+import Error from 'Error';
 
 // routes
 import {
+  errorRoute,
   homeRoute,
   generateTournamentRoute,
   tournamentRoute,
@@ -33,8 +35,9 @@ function App() {
             component={TournamentForm}
           />
           <Route path={tournamentRoute} component={Tournament} />
+          <Route path={errorRoute} component={Error} />
           <Route path='*'>
-            <Redirect to='/' />
+            <Redirect to='/error' />
           </Route>
         </Switch>
       </RecoilRoot>

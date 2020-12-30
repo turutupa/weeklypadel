@@ -3,14 +3,17 @@ import styled from 'styled-components';
 
 import Layout from './Layout';
 import { titles, neonColors } from './helpers';
+import { isFixedPairsGame } from './formHelpers';
+import { ROUND_ROBIN } from 'utils/constants';
 
-import { useRecoilState } from 'recoil';
-import { tournamentType } from './formAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { tournamentType, tournamentMode } from './formAtom';
 import {
   SelectTournament,
   AddTournamentName,
   AddPlayers,
-  Players,
+  AddTeams,
+  PlayersList,
   GenerateTournament,
 } from './components';
 
@@ -25,9 +28,11 @@ function TournamentForm() {
     tournamentType
   );
 
+  const selectedTournamentMode = useRecoilValue(tournamentMode);
+
   React.useEffect(() => {
     return () => {
-      setTournamentType('roundrobin');
+      setTournamentType(ROUND_ROBIN);
     };
   }, []);
 
@@ -39,9 +44,13 @@ function TournamentForm() {
       <Body>
         <SelectTournament />
         <AddTournamentName />
-        <AddPlayers />
+        {isFixedPairsGame(selectedTournamentMode) ? (
+          <AddTeams />
+        ) : (
+          <AddPlayers />
+        )}
         <GenerateTournament />
-        <Players />
+        <PlayersList />
       </Body>
     </Layout>
   );

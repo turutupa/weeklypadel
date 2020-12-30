@@ -17,3 +17,7 @@ export interface TournamentNameAtom extends Atom {
 export interface PlayersAtom extends Atom {
   default: string[];
 }
+
+export interface TeamsAtom extends Atom {
+  default: string[][];
+}

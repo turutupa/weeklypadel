@@ -1,10 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { electricBlue, primary } from 'utils/colors';
+
 const Sun = styled.div`
   width: 350px;
   height: 350px;
-  background: linear-gradient(180deg, #faf09d 0%, #fc9093 52.08%, #e92077 70%);
+  background: linear-gradient(
+    180deg,
+    ${electricBlue} 0%,
+    ${electricBlue} 20%,
+    ${primary} 70%
+  );
   border-radius: 50%;
   z-index: 2;
   margin: 0 auto;
@@ -20,19 +27,19 @@ const Sun = styled.div`
 
 const Lines = styled.div`
   width: 100%;
-  height: 50%;
+  height: 15%;
   position: relative;
-  bottom: -20%;
-  border-radius: 0 0 50% 50%;
+  bottom: -15%;
+  // border-radius: 0 0 50% 50%;
   overflow: hidden;
 `;
 
 const Line = styled.div`
-  height: ${({ pos }: { pos: number }) => `calc(5px * ${pos})`};
+  height: ${({ pos }: { pos: number }) => `calc(10px)`};
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  mix-blend-mode: overlay;
-  margin-bottom: 1rem;
+  background-color: rgba(15, 0, 25, 1);
+  mix-blend-mode: normal;
+  margin-bottom: 10px;
 `;
 
 function renderLines() {

@@ -27,7 +27,7 @@ const NeonWrapper = styled.div`
 export default function TournamentSelection() {
   return (
     <NeonWrapper>
-      <Neon top='Generate' bottom='Tournament' to={generateTournamentRoute} />
+      <Neon top='Create' bottom='Tournament' to={generateTournamentRoute} />
     </NeonWrapper>
   );
 }

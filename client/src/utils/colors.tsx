@@ -3,9 +3,11 @@ export const secondary: string = 'rgb(242,34,255)';
 export const night: string = 'rgb(140,30,255)';
 export const sunset: string = 'rgb(255,211,25)';
 export const dawn: string = 'rgb(255,144,31)';
+export const riverBlue: string = 'rgb(45, 236, 230)';
 export const electricBlue: string = 'rgb(44, 117, 255)';
 
 // background colors
+
 export const dark: string = 'rgb(15,0,25)';
 export const light: string = '#fff';
 

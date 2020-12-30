@@ -1,14 +1,13 @@
 import React from 'react';
 
 import {
-  Sun,
-  Grid,
   SiteDescription,
   CreateTournamentNeon,
   TournamentsDescription,
 } from './components';
 
-import Navbar from 'Navbar';
+import backgrounds from './backgroundImages';
+
 import Title from 'Title';
 
 import styled from 'styled-components';
@@ -22,18 +21,33 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-image: url(' ${({ bg }: { bg: string }) => bg}');
+  background-size: cover;
+  background-position: center;
 `;
 
 export default function Welcome() {
+  const [bg, setBg] = React.useState<string>(backgrounds[0]);
+  const [counter, setCounter] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    const bgLoop = setTimeout(() => {
+      const c = counter + 1 >= backgrounds.length ? 0 : counter + 1;
+      setCounter(c);
+      setBg(backgrounds[c]);
+    }, 10000);
+
+    return () => {
+      clearTimeout(bgLoop);
+    };
+  }, [bg]);
+
   return (
     <>
-      {/* <Navbar /> */}
-      <Wrapper>
-        <Sun />
-        <Grid />
+      <Wrapper bg={bg}>
         <Title />
-        <SiteDescription />
         <CreateTournamentNeon />
+        <SiteDescription />
       </Wrapper>
       <TournamentsDescription />
     </>

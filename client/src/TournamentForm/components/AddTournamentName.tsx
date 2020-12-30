@@ -3,6 +3,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { tournamentName as tournamentNameAtom } from '../formAtom';
 import { TextInput } from 'Form';
+import { tournamentNameLengthErrorMsg } from '../formHelpers';
 
 export default function AddPlayers() {
   const [tournamentName, setTournamentName] = useRecoilState(
@@ -12,7 +13,7 @@ export default function AddPlayers() {
 
   React.useEffect(() => {
     if (tournamentName.length < 3) {
-      setError('Name must be at least 3 chars long');
+      setError(tournamentNameLengthErrorMsg);
     } else {
       setError('');
     }

@@ -1,9 +1,5 @@
 import Player from './Player';
-
-export interface Teams {
-  local: [Player, Player];
-  visitor: [Player, Player];
-}
+import { Teams } from './interfaces';
 
 class Match {
   private local: [Player, Player];

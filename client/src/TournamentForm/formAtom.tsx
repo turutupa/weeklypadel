@@ -5,6 +5,7 @@ import {
   TournamentModeAtom,
   TournamentNameAtom,
   PlayersAtom,
+  TeamsAtom,
 } from './interfacesAtom';
 
 const tournamentTypeAtom: TournamentTypeAtom = {
@@ -27,7 +28,13 @@ const playersAtom: PlayersAtom = {
   default: [],
 };
 
+const teamsAtom: TeamsAtom = {
+  key: 'teams',
+  default: [],
+};
+
 export const tournamentType = atom(tournamentTypeAtom);
 export const tournamentMode = atom(tournamentModeAtom);
 export const tournamentName = atom(tournamentNameAtom);
 export const players = atom(playersAtom);
+export const teams = atom(teamsAtom);

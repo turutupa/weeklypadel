@@ -46,14 +46,12 @@ class Tournament {
    */
   addPlayer(player: string): void {
     if (this.players.has(player)) {
-      new Error(`Player named ${player} already exists`);
+      throw new Error(`Player named ${player} already exists`);
     }
 
     this.players.set(player, Player.named(player));
     return;
   }
-
-  roundRobinRandomAssignedPair() {}
 
   fixedTeams(pairs: [string, string][]) {
     return this.roundRobin.fixedTeams(pairs);

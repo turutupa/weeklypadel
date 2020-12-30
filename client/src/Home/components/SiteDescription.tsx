@@ -8,7 +8,11 @@ const Container = styled.div`
   box-sizing: border-box;
   max-width: 100vw;
   padding: 10px;
-  margin-top: -25px;
+  margin-top: -100px;
+
+  @media (min-width: 768px) {
+    margin-top: -25px;
+  }
 `;
 
 const Title = styled.p`
@@ -27,7 +31,7 @@ const Subtitle = styled.p`
   color: white;
   z-index: 10;
   font-family: Neon;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: rgb(230, 230, 230);
   max-width: 400px;
   text-align: center;

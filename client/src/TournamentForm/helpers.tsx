@@ -1,29 +1,21 @@
-export const tournamentNameMinLength = 3;
-export const tournamentMinNumberPlayers = 4;
+import { ROUND_ROBIN, BRACKETS } from 'utils/constants';
 
-export const freeForAllValue = 'freeForAll';
+import {
+  ROUND_ROBIN_CLASSIC,
+  ROUND_ROBIN_FREE_FOR_ALL,
+  BRACKETS_KING_OF_THE_HILL,
+} from 'utils/constants';
+
+export const freeForAllValue = ROUND_ROBIN_FREE_FOR_ALL;
 export const freeForAllLabel = 'Free-For-All!';
-export const classicValue = 'classic';
+export const classicValue = ROUND_ROBIN_CLASSIC;
 export const classicLabel = 'Classic';
-export const kingOfTheHillValue = 'kingOfTheHill';
+export const kingOfTheHillValue = BRACKETS_KING_OF_THE_HILL;
 export const kingOfTheHillLabel = 'King of the hill';
 
-type Tournament = string;
-
-export const fixedTeamsGame = function (
-  selectedTournament: Tournament
-): boolean {
-  if (
-    selectedTournament === classicValue ||
-    selectedTournament === kingOfTheHillValue
-  )
-    return true;
-  return false;
-};
-
 export const tournamentTypes = [
-  { label: 'Round Robin', value: 'roundrobin' },
-  { label: 'Brackets Tournament', value: 'brackets' },
+  { label: 'Round Robin', value: ROUND_ROBIN },
+  { label: 'Brackets Tournament', value: BRACKETS },
 ];
 
 // aweful useage of typescript.

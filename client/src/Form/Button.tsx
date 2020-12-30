@@ -8,18 +8,21 @@ interface ButtonProps {
   bg?: string;
   color?: string;
   solid?: boolean;
+  disabled?: boolean;
 }
 
 const Wrapper = styled.button`
   ${borderRadius}
   ${padding}
 
-  ${({ bg, color, solid }: ButtonProps): string => {
+  ${({ bg, color, solid, disabled }: ButtonProps): string => {
     return `
       ${solid ? 'box-shadow: none !important;' : boxShadow(electricBlue)}
       ${solid ? 'border: none;' : border(electricBlue)}
       background-color: ${bg};
       color: ${color};
+      ${disabled ? 'filter: grayscale(100%);' : null}
+      ${disabled ? `cursor: not-allowed;` : `cursor: pointer;`}
     `;
   }};
 
@@ -27,12 +30,20 @@ const Wrapper = styled.button`
   width: 100%;
   outline: none;
   font-family: Commando;
-  cursor: pointer;
   margin-top: 10px;
   margin-bottom: 30px;
 
   &:hover {
-    filter: brightness(1.2);
+    ${({ disabled }) =>
+      disabled
+        ? `
+      filter: grayscale(100%);
+      cursor: not-allowed;
+      `
+        : `
+      filter: brightness(1.2);
+      cursor: pointer;
+      `}
     ${boxShadow(primary)}
   }
 `;
@@ -45,10 +56,11 @@ interface Props {
   solid?: boolean;
   onClick?: (...args: any) => void;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  disabled?: boolean;
 }
 
 export default function Button(props: Props) {
-  let { children, onClick, type, solid, color, bg } = props;
+  let { children, onClick, type, solid, color, bg, disabled } = props;
 
   // default Background && Font Color
   if (!color) color = 'black';
@@ -65,6 +77,7 @@ export default function Button(props: Props) {
           onClick();
         }
       }}
+      disabled={disabled}
     >
       {children}
     </Wrapper>

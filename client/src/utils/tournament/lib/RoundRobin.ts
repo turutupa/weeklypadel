@@ -1,7 +1,9 @@
-import Match, { Teams } from './Match';
+import Match from './Match';
 import { Players } from './Tournament';
 import Player from './Player';
 import robin from 'roundrobin';
+
+import { Teams } from './interfaces';
 
 export default class RoundRobin {
   /**
@@ -10,15 +12,19 @@ export default class RoundRobin {
    * against each other pair
    * @param players: Players
    */
-  fixedTeams(pairs: [string, string][]): void {
+  fixedTeams(pairs: [string, string][]): Match[][] {
     // const pairsOfPlayers = pairs.map((pair) =>
     //   pair.map((player) => Player.named(player))
     // );
-    const rounds = robin(
-      pairs.length,
-      pairs.map((pair) => `${pair[0]} ${pair[1]}`)
-    );
-    console.log('fixed pairs rr', rounds);
+
+    // i left it here... god knows what I was doing xd
+    // const rounds = robin(
+    //   pairs.length,
+    //   pairs.map((pair) => `${pair[0]} ${pair[1]}`)
+    // );
+    // console.log('fixed pairs rr', rounds);
+
+    return [];
   }
 
   /**

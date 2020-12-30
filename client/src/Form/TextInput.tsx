@@ -44,15 +44,16 @@ const Error = styled.div`
 `;
 
 interface Props {
-  label: string;
+  label?: string;
   value: string;
   callback?: (...args: any) => void;
   error?: string;
   required?: boolean;
+  placeholder?: string;
 }
 
 export default function FormInput(props: Props) {
-  const { label, value, callback, required, error } = props;
+  const { label, value, callback, required, error, placeholder } = props;
 
   return (
     <Wrapper>
@@ -60,10 +61,11 @@ export default function FormInput(props: Props) {
       <Input
         value={value}
         required={required}
+        placeholder={placeholder || undefined}
         onChange={(e) => {
           e.stopPropagation();
           if (callback) {
-            callback(e.target.value);
+            callback(e.target.value, e);
           }
         }}
       />
