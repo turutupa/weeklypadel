@@ -11,3 +11,8 @@ export const ROUND_ROBIN_CLASSIC = 'classic';
 export const ROUND_ROBIN_FREE_FOR_ALL = 'freeForAll';
 
 export const BRACKETS_KING_OF_THE_HILL = 'kingOfTheHill';
+
+export enum TournamentModes {
+  rotatingPairs = 'rotatingPairs',
+  fixedTeams = 'fixedTeams',
+}

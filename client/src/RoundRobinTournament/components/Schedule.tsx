@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// recoil
+import { useRecoilValue } from 'recoil';
+import { tournament as tournamentAtom } from '../tournamentAtom';
+
 import { Match } from '../../utils/tournament';
 
 const MatchItem = styled.div``;
 
 const Team = styled.div``;
-
-interface Props {
-  schedule: Match[][];
-}
 
 function renderSchedule(schedule: Match[][]) {
   return schedule.map((round, index) => {
@@ -38,6 +38,11 @@ function renderSchedule(schedule: Match[][]) {
   });
 }
 
-export default function Schedule({ schedule }: Props): JSX.Element[][] {
-  return renderSchedule(schedule);
+export default function Schedule(): JSX.Element[][] {
+  const tournament = useRecoilValue(tournamentAtom);
+  if (!tournament) return [];
+  return [];
+
+  // const schedule = tournament.schedule();
+  // return renderSchedule(schedule);
 }

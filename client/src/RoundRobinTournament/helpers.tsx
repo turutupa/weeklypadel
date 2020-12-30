@@ -6,6 +6,6 @@ export function isIncorrectModeType(mode: string): boolean {
   return false;
 }
 
-export function playersToPlayersList(players: string): string[] {
+export function playersStringToPlayersList(players: string): string[] {
   return players.split(',');
 }

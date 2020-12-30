@@ -1,65 +1,17 @@
-import Player from './Player';
-import Match from './Match';
+import { Tournament, TournamentModes } from './interfaces';
 import RoundRobin from './RoundRobin';
-// import Leaderboard from './Leaderboard';
+import Brackets from './Brackets';
 
-export type Players = Map<string, Player>;
-
-class Tournament {
-  static roundRobin(name: string): Tournament {
-    return new Tournament(name, new Map(), new RoundRobin());
-  }
-
-  constructor(
-    public name: string,
-    private players: Players,
-    private roundRobin: RoundRobin
-  ) {}
-
-  // Get All Players
-  getPlayers(): Players {
-    return this.players;
-  }
-
-  // Get array of players names
-  getPlayersNames(): string[] {
-    let playersNames: string[] = [];
-    for (let [key, _] of this.players) {
-      playersNames.push(key);
+export default class TournamentBuilder {
+  static roundRobin(name: string, type: TournamentModes): Tournament {
+    if (type === TournamentModes.fixedTeams) {
+      return RoundRobin.fixedTeams(name);
     }
 
-    return playersNames;
+    return RoundRobin.rotatingPlayers(name);
   }
 
-  /**
-   * Public method to add players in batch
-   * @param players: string[]
-   */
-  addPlayers(players: string[]): void {
-    players.forEach((player) => this.addPlayer(player));
-  }
-
-  /**
-   * Public method to add one player to the tournament
-   * @param {Player} player
-   * @return {void}
-   */
-  addPlayer(player: string): void {
-    if (this.players.has(player)) {
-      throw new Error(`Player named ${player} already exists`);
-    }
-
-    this.players.set(player, Player.named(player));
-    return;
-  }
-
-  fixedTeams(pairs: [string, string][]) {
-    return this.roundRobin.fixedTeams(pairs);
-  }
-
-  rotatingTeams(): Match[][] {
-    return this.roundRobin.rotatingTeams(this.players);
+  static brackets(): void {
+    console.log('You trying to create a Brackets Tournament? 😅');
   }
 }
-
-export default Tournament;

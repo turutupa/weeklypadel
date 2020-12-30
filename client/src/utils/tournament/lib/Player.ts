@@ -1,9 +1,4 @@
-interface Results {
-  wins: number;
-  loses: number;
-  points: number;
-}
-
+import { Results } from './interfaces';
 class Player {
   private wins: number;
   private loses: number;
