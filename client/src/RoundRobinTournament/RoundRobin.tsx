@@ -25,8 +25,8 @@ import PlayersList from 'PlayersList';
   I don't like what I have done but:
 
   Incongruencies:
-  - players list is rendered directly from players string // faster loading...
-  - schedule is rendered leveraging tournament
+  - players list is rendered directly from players string // faster loading, but no player details...
+  - schedule is rendered leveraging tournament // 
 
   Change that so we can sort them by wins/losses
 */
@@ -45,7 +45,7 @@ export default function RoundRobin(props: Props) {
 
   const playersList = playersStringToPlayersList(players);
 
-  console.log(tournament);
+  // console.log(tournament);
 
   // initiate roundrobin tournament
   React.useEffect(() => {

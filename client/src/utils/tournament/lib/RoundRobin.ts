@@ -4,7 +4,7 @@ import {
   FixedTeamsTournament,
 } from './helpers';
 import Match from './Match';
-import { Players, Team } from './interfaces';
+import { Tournament, Players, Team } from './interfaces';
 export default class RoundRobin {
   static rotatingPlayers(name: string) {
     return new RotatingPlayersRoundRobin(name, new Map());
@@ -12,6 +12,20 @@ export default class RoundRobin {
 
   static fixedTeams(name: string) {
     return new FixedTeamsRoundRobin(name, [], new Map());
+  }
+}
+
+export class RotatingRR implements Tournament {
+  public addPlayers: (players: string[]) => void;
+  public getPlayersNames: () => string[];
+  public schedule: () => Match[][];
+
+  constructor(public name: string, private players: Players) {
+    this.players = players;
+    const playersHandler = new RotatingPlayersTournament(this.players);
+    this.addPlayers = playersHandler.addPlayers;
+    this.getPlayersNames = playersHandler.getPlayersNames;
+    this.schedule = RoundRobinBuilder.rotatingTeams.bind(null, this.players);
   }
 }
 

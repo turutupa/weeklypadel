@@ -1,13 +1,8 @@
 import Player from '../Player';
-// import RoundRobin from './RoundRobin';
 
 import { Players } from '../interfaces';
 
 export default class RotatingPlayersBuilder {
-  static roundRobin(): RotatingPlayersBuilder {
-    return new RotatingPlayersBuilder(new Map());
-  }
-
   constructor(readonly players: Players) {}
 
   // Get All Players

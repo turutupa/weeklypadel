@@ -2,7 +2,7 @@ import { Tournament, TournamentModes } from './interfaces';
 import RoundRobin from './RoundRobin';
 import Brackets from './Brackets';
 
-export default class TournamentBuilder {
+export default class TournamentFactory {
   static roundRobin(name: string, type: TournamentModes): Tournament {
     if (type === TournamentModes.fixedTeams) {
       return RoundRobin.fixedTeams(name);
